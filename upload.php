@@ -1,18 +1,10 @@
 <?php
 error_reporting(E_ERROR);
-$tokens = array("token1", "token2"); //Tokens go here
-$sharexdir = "i/"; //File directory
-$lengthofstring = 5; //Length of file name
 
-//Random file name generation
-function RandomString($length) {
-    $keys = array_merge(range(0,9), range('a', 'z'));
- 
-    for($i=0; $i < $length; $i++) {
-        $key .= $keys[mt_rand(0, count($keys) - 1)];
-    }
-    return $key;
-}
+include 'UUID.php';
+
+$tokens = array("token1", "token2"); //Tokens go here
+$sharexdir = ""; //File directory
  
 //Check for token
 if(isset($_POST['secret']))
@@ -21,7 +13,7 @@ if(isset($_POST['secret']))
     if(in_array($_POST['secret'], $tokens))
     {
         //Prepares for upload
-        $filename = RandomString($lengthofstring);
+        $filename = UUID::v4();
         $target_file = $_FILES["sharex"]["name"];
         $fileType = pathinfo($target_file, PATHINFO_EXTENSION);
         
